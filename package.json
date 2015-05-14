@@ -1,0 +1,12 @@
+{
+  "name": "its-hot",
+  "private": true,
+  "version": "0.0.1",
+  "description": "It is hot...",
+  "author": "Dan Medani <danmedani@gmail.com>",
+  "dependencies": {
+    "express": "4.12.3",
+    "body-parser": "1.12.4",
+    "mongodb": "2.0.31"
+  }
+}
