@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>6 Thoughts</title>
+  </head>
+  <style>
+    body {background-color: #66F0A8;}
+    h1 {background-color: #66F0A8; }
+    @font-face {
+      font-family: 'Diplomata';
+      font-style: normal;
+      font-weight: 300;
+      src: local('Diplomata'), local('Diplomata-Regular'), url(http://fonts.gstatic.com/s/diplomata/v6/8UgOK_RUxkBbV-q561I6kFtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+    }
+    @font-face {
+      font-family: 'Open Sans Condensed';
+      font-style: normal;
+      font-weight: 200;
+      src: local('Open Sans Cond Light'), local('OpenSans-CondensedLight'), url(http://fonts.gstatic.com/s/opensanscondensed/v10/gk5FxslNkTTHtojXrkp-xBEur64QvLD-0IbiAdTUNXE.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    }
+    p {
+      margin: 0 0 10px 0;
+    }
+    input {
+      font-size: 17px;
+    }
+    .narrow-font {
+      font-family: 'Open Sans Condensed', sans-serif;
+    }
+    .wide-font {
+      font-family: 'Diplomata', cursive;
+    }
+    .set-width {
+      width: 220px;
+    }
+    .marq {
+      font-size: 17px;
+      font-family: 'Diplomata', cursive;
+    }
+  </style>
+  <body>
+    <div align="center">
+      <marquee id="marq" class="marq">Speak your mind</marquee>
+      <form id="form">
+        <input id="post" class="wide-font" type="text" size="60" autofocus><br><br>
+        Username: <input id="user" class="wide-font" type="text" size="8" value="anon"><br><br>
+        <input type="submit" value="Express yourself">
+      </form>
+    </div>
+    <div id="posts">
+    </div>
+    <div align="center"><img src="http://weknowgifs.com/wp-content/uploads/2013/03/70s-guy-walks-into-room-and-screams.gif"></div>
+  </body>
+  <script>
+    var connection
+    window.addEventListener("load", function () {
+      connection = new WebSocket("ws://"+window.location.hostname+":8081")
+      connection.onopen = function () {
+        connection.send(JSON.stringify({connect: true}))
+        document.getElementById("form").onsubmit = function (event) {
+          var postTxt = document.getElementById("post")
+          var userTxt = document.getElementById("user")
+          if (post && user) {
+            connection.send(JSON.stringify({post: post.value, user: user.value}))
+            postTxt.value = ""
+          }
+          event.preventDefault()
+        }
+      }
+      connection.onclose = function () {
+        console.log("Connection closed")
+      }
+      connection.onerror = function () {
+        console.error("Connection error")
+      }
+      connection.onmessage = function (event) {
+        var packet = JSON.parse(event.data)
+        if (packet.userCount) {
+          document.getElementById("marq").innerHTML = "Active user count: " + packet.userCount
+        }
+        if (packet.posts) {
+          var postHtml = ''
+          for (var i = 0; i < packet.posts.length; i ++) {
+            postHtml += '<h1 style=' + packet.posts[i].style + '>'
+            postHtml += '"' + packet.posts[i].post + '" - ' + packet.posts[i].user + '<br>'
+            postHtml += '</h1><br>'
+          }
+          document.getElementById("posts").innerHTML = postHtml
+        }
+      }
+    })
+  </script>
+</html>
