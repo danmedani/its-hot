@@ -27,7 +27,9 @@ var getRenderedPosts = function(then) {
         numToShow = items.length
       }
       for (var i = 0; i < numToShow; i ++) {
-        items[i].style = 'font-size:' + (400 - (i * 70)) + '%;color:' + randomHexColor()
+        // items[i].style = 'font-size:' + (400 - (i * 70)) + '%;color:' + randomHexColor()
+        items[i].style = 'font-size:' + (400 - (i * 70)) + '%;color:' + "#1613c1"
+        
         retPosts.push(items[i])
       }
       then(retPosts)
