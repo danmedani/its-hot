@@ -65,6 +65,7 @@ var numConnections = 0
 var server = ws.createServer(function (connection) {
   connection.on("text", function (str) {
     var packet = JSON.parse(str);
+    console.log(packet)
 
     if (packet.connect) {
       numConnections ++
