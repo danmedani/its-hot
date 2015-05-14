@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>7 Thoughts</title>
+  </head>
+  <style>
+    body {background-color: <%=bgColor%>;}
+    h1 {background-color: <%=bgColor%>; }
+    @font-face {
+      font-family: 'Diplomata';
+      font-style: normal;
+      font-weight: 300;
+      src: local('Diplomata'), local('Diplomata-Regular'), url(http://fonts.gstatic.com/s/diplomata/v6/8UgOK_RUxkBbV-q561I6kFtXRa8TVwTICgirnJhmVJw.woff2) format('woff2');
+    }
+    @font-face {
+      font-family: 'Open Sans Condensed';
+      font-style: normal;
+      font-weight: 200;
+      src: local('Open Sans Cond Light'), local('OpenSans-CondensedLight'), url(http://fonts.gstatic.com/s/opensanscondensed/v10/gk5FxslNkTTHtojXrkp-xBEur64QvLD-0IbiAdTUNXE.woff2) format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+    }
+    p {
+      margin: 0 0 10px 0;
+    }
+    input {
+      font-size: 17px;
+    }
+    .narrow-font {
+      font-family: 'Open Sans Condensed', sans-serif;
+    }
+    .wide-font {
+      font-family: 'Diplomata', cursive;
+    }
+    .set-width {
+      width: 220px;
+    }
+    .marq {
+      font-size: 17px;
+      font-family: 'Diplomata', cursive;
+    }
+  </style>
+  <body>
+    <div align="center">
+      <marquee class="marq">Speak your mind</marquee>
+      <form method="post">
+        <input name="post" class="wide-font" type="text" size="60" autofocus><br><br>
+        Username: <input name="user" class="wide-font" type="text" size="8" value="anon"><br><br>
+        <input type="submit" value="Express yourself">
+      </form>
+    </div>
+    <div class="posts" align="left">
+      <% for(var i=0; i<posts.length; i++) {%>
+        <h1 style=<%=posts[i].style %>>"<%= posts[i].post %>" - <%=posts[i].user %></h1><br>
+      <% } %>
+    </div>
+    <div align="center"><img src="http://weknowgifs.com/wp-content/uploads/2013/03/70s-guy-walks-into-room-and-screams.gif"></div>
+  </body>
+</html>
