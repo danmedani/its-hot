@@ -10,7 +10,7 @@ app.use(bodyParser())
 var MongoClient = require('mongodb').MongoClient
 
 var dbConnect = function(then) { 
-  MongoClient.connect('mongodb://localhost:27017/posts', then) 
+  MongoClient.connect('mongodb://ec2-54-149-249-47.us-west-2.compute.amazonaws.com:27017/posts', then) 
 }
 
 var getRenderedPosts = function(then) {
