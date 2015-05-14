@@ -81,13 +81,23 @@
           document.getElementById("marq").innerHTML = "Active user count: " + packet.userCount
         }
         if (packet.posts) {
-          var postHtml = ''
-          for (var i = 0; i < packet.posts.length; i ++) {
-            postHtml += '<h1 style=' + packet.posts[i].style + '>'
-            postHtml += '"' + packet.posts[i].post + '" - ' + packet.posts[i].user + '<br>'
-            postHtml += '</h1><br>'
+          var postsEl = document.getElementById("posts")
+          while (postsEl.hasChildNodes()) {
+            postsEl.firstChild.remove();
           }
-          document.getElementById("posts").innerHTML = postHtml
+//          var postHtml = "";
+          for (var i = 0; i < packet.posts.length; i ++) {
+            var postEl = document.createElement("h1");
+            postEl.setAttribute("style", packet.posts[i].style);
+            postEl.appendChild(document.createTextNode('"' + packet.posts[i].post + '" - ' + packet.posts[i].user));
+            postEl.appendChild(document.createElement("br"));
+            postsEl.appendChild(postEl);
+            postsEl.appendChild(document.createElement("br"));
+//            postHtml += '<h1 style=' + packet.posts[i].style + '>'
+//            postHtml += '"' + packet.posts[i].post + '" - ' + packet.posts[i].user + '<br>'
+//            postHtml += '</h1><br>'
+          }
+//          document.getElementById("posts").innerHTML = postHtml
         }
       }
     })
